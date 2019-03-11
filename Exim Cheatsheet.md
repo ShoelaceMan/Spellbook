@@ -98,7 +98,71 @@ Print just the message-id of the entire queue:
 
 Managing the queue
 ---
+The main exim binary (/usr/sbin/exim) is used with various flags to make things happen to messages in the queue. Most of these require one or more message-IDs to be specified in the command line, which is where `exiqgrep -i` as described above really comes in handy.
 
+Start a queue run:
+
+`root@localhost# exim -q -v`
+
+Start a queue run for just local deliveries:
+
+`root@localhost# exim -ql -v`
+
+Remove a message from the queue:
+
+`root@localhost# exim -Mrm <message-id> [ <message-id> ... ]`
+
+Freeze a message:
+
+`root@localhost# exim -Mf <message-id> [ <message-id> ... ]`
+
+Thaw a message:
+
+`root@localhost# exim -Mt <message-id> [ <message-id> ... ]`
+
+Deliver a message, whether it's frozen or not, whether the retry time has been reached or not:
+
+`root@localhost# exim -M <message-id> [ <message-id> ... ]`
+
+Deliver a message, but only if the retry time has been reached:
+
+`root@localhost# exim -Mc <message-id> [ <message-id> ... ]`
+
+Force a message to fail and bounce as "cancelled by administrator":
+
+`root@localhost# exim -Mg <message-id> [ <message-id> ... ]`
+
+Remove all frozen messages:
+
+`root@localhost# exiqgrep -z -i | xargs exim -Mrm`
+
+Remove all messages older than five days (86400 * 5 = 432000 seconds):
+
+`root@localhost# exiqgrep -o 432000 -i | xargs exim -Mrm`
+
+Freeze all queued mail from a given sender:
+
+`root@localhost# exiqgrep -i -f luser@example.tld | xargs exim -Mf`
+
+View a message's headers:
+
+`root@localhost# exim -Mvh <message-id>`
+
+View a message's body:
+
+`root@localhost# exim -Mvb <message-id>`
+
+View a message's logs:
+
+`root@localhost# exim -Mvl <message-id>`
+
+Add a recipient to a message:
+
+`root@localhost# exim -Mar <message-id> <address> [ <address> ... ]`
+
+Edit the sender of a message:
+
+`root@localhost# exim -Mes <message-id> <address>`
 
 Access control
 ---
