@@ -166,7 +166,56 @@ Edit the sender of a message:
 
 Access control
 ---
+Exim allows you to apply access control lists at various points of the SMTP transaction by specifying an ACL to use and defining its conditions in exim.conf. You could start with the HELO string.
+```
+# Specify the ACL to use after HELO
+acl_smtp_helo = check_helo
 
+# Conditions for the check_helo ACL:
+check_helo:
+
+    deny message = Gave HELO/EHLO as "friend"
+    log_message = HELO/EHLO friend
+    condition = ${if eq {$sender_helo_name}{friend} {yes}{no}}
+
+    deny message = Gave HELO/EHLO as our IP address
+    log_message = HELO/EHLO our IP address
+    condition = ${if eq {$sender_helo_name}{$interface_address} {yes}{no}}
+
+    accept
+```
+NOTE: Pursue HELO checking at your own peril. The HELO is fairly unimportant in the grand scheme of SMTP these days, so don't put too much faith in whatever it contains. Some spam might seem to use a telltale HELO string, but you might be surprised at how many legitimate messages start off with a questionable HELO as well. Anyway, it's just as easy for a spammer to send a proper HELO than it is to send HELO im.a.spammer, so consider yourself lucky if you're able to stop much spam this way.
+
+Next, you can perform a check on the sender address or remote host. This shows how to do that after the RCPT TO command; if you reject here, as opposed to rejecting after the MAIL FROM, you'll have better data to log, such as who the message was intended for.
+```
+# Specify the ACL to use after RCPT TO
+acl_smtp_rcpt = check_recipient
+
+# Conditions for the check_recipient ACL
+check_recipient:
+
+    # [...]
+
+    drop hosts = /etc/exim_reject_hosts
+    drop senders = /etc/exim_reject_senders
+
+    # [ Probably a whole lot more... ]
+```
+This example uses two plain text files as blacklists. Add appropriate entries to these files - hostnames/IP addresses to /etc/exim_reject_hosts, addresses to /etc/exim_reject_senders, one entry per line.
+
+It is also possible to perform content scanning using a regex against the body of a message, though obviously this can cause Exim to use more CPU than it otherwise would need to, especially on large messages.
+```
+# Specify the ACL to use after DATA
+acl_smtp_data = check_message
+
+# Conditions for the check_messages ACL
+check_message:
+
+    deny message = "Sorry, Charlie: $regex_match_string"
+    regex = ^Subject:: .*Lower your self-esteem by becoming a sysadmin
+
+    accept
+```
 
 Fix SMTP-Auth for Pine
 ---
