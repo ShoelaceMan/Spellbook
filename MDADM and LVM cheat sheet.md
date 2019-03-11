@@ -25,18 +25,18 @@ mdadm
 This is especially handy for a long disk re-sync.
 
 First, get the current readahead:
-blockdev --getra /dev/md0
+`blockdev --getra /dev/mdX`
 
 If it's a low number, performance is pitiful, but modern
 drives can improve performance significantly compared
 to the old values that drives used to use:
-blockdev --setra 65536 /dev/md0
+`blockdev --setra 65536 /dev/mdX`
+Of course, if you have several devices, you can do something as simple as this:
+`for i in /dev/md*; do blockdev --setra 65536 "$i"; done`
 
 Now, set some sysctl settings:
-sysctl -w dev.raid.speed_limit_min=100000
-sysctl -w dev.raid.speed_limit_max=500000
-
-In some cases, this can nearly double IO.
+`sysctl -w dev.raid.speed_limit_min=100000`
+`sysctl -w dev.raid.speed_limit_max=500000`
 
 lvm
 ===
