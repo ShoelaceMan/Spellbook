@@ -259,7 +259,31 @@ It is probably possible to use a separate file to list these domains, but I have
 
 Searching the logs with exigrep
 ---
+The [exigrep](https://www.exim.org/exim-html-4.50/doc/html/spec_49.html#IX2911) utility (not to be confused with exiqgrep) is used to search an exim log for a string or pattern. It will print all log entries with the same internal message-id as those that matched the pattern, which is very handy since any message will take up at least three lines in the log. exigrep will search the entire content of a log entry, not just particular fields.
 
+One can search for messages sent from a particular IP address:
+
+`root@localhost# exigrep '<= .* \[12.34.56.78\] ' /path/to/exim_log`
+
+Search for messages sent to a particular IP address:
+
+`root@localhost# exigrep '=> .* \[12.34.56.78\]' /path/to/exim_log`
+
+This example searches for outgoing messages, which have the "=>" symbol, sent to "user@domain.tld". The pipe to grep for the "<=" symbol will match only the lines with information on the sender - the From address, the sender's IP address, the message size, the message ID, and the subject line if you have enabled logging the subject. The purpose of doing such a search is that the desired information is not on the same log line as the string being searched for.
+
+`root@localhost# exigrep '=> .*user@domain.tld' /path/to/exim_log | fgrep '<='`
+
+Generate and display Exim stats from a logfile:
+
+`root@localhost# eximstats /path/to/exim_mainlog`
+
+Same as above, with less verbose output:
+
+`root@localhost# eximstats -ne -nr -nt /path/to/exim_mainlog`
+
+Same as above, for one particular day:
+
+`root@localhost# fgrep YYYY-MM-DD /path/to/exim_mainlog | eximstats`
 
 Bonus!
 ---
