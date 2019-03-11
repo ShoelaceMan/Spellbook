@@ -1,7 +1,7 @@
 mdadm
 =====
 
-Glossary:
+### Glossary
 * md: multiple devices
 
 | command | description |
@@ -41,7 +41,7 @@ In some cases, this can nearly double IO.
 lvm
 ===
 
-Glossary:
+### Glossary
 * *pv*: physical device (e.g. `/dev/md0` or `/dev/sda1`)
 * *vg*: volume group (consists of 1 or more *pv*s, contains *lv*s); has a name (e.g. `lvm`)
 * *lv*: logical volume (has a name which defines its path, e.g. `/dev/lvm/root` which equals `dev/mapper/lvm-root`)
