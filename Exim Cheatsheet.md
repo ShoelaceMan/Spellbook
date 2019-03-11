@@ -219,19 +219,43 @@ check_message:
 
 Fix SMTP-Auth for Pine
 ---
+If pine can't use SMTP authentication on an Exim host and just returns an "unable to authenticate" message without even asking for a password, add the following line to exim.conf:
+```
+  begin authenticators
 
+  fixed_plain:
+  driver = plaintext
+  public_name = PLAIN
+  server_condition = "${perl{checkuserpass}{$1}{$2}{$3}}"
+  server_set_id = $2
+>  server_prompts = :
+```
+This was a problem on CPanel Exim builds awhile ago, but they seem to have added this line to their current stock configuration.
 
 Log the subject line
 ---
+This is one of the most useful configuration tweaks I've ever found for Exim. Add this to exim.conf, and you can log the subject lines of messages that pass through your server. This is great for troubleshooting, and for getting a very rough idea of what messages may be spam.
 
+`log_selector = +subject`
+
+[Reducing or increasing what is logged.](https://www.exim.org/exim-html-4.50/doc/html/spec_48.html#SECT48.15)
 
 Disable identd lookups
 ---
+Frankly, I don't think [identd](https://www.ietf.org/rfc/rfc1413.txt) has been useful for a long time, if ever. Identd relies on the connecting host to confirm the identity (system UID) of the remote user who owns the process that is making the network connection. This may be of some use in the world of shell accounts and IRC users, but it really has no place on a high-volume SMTP server, where the UID is often simply "mail" or whatever the remote MTA runs as, which is useless to know. It's overhead, and results in nothing but delays while the identd query is refused or times out. You can stop your Exim server from making these queries by setting the timeout to zero seconds in exim.conf:
 
+`rfc1413_query_timeout = 0s`
 
 Disable Attachment Blocking
 ---
-
+To disable the executable-attachment blocking that many Cpanel servers do by default but don't provide any controls for on a per-domain basis, add the following block to the beginning of the /etc/antivirus.exim file:
+```
+if $header_to: matches "example\.com|example2\.com"
+then
+  finish
+endif
+```
+It is probably possible to use a separate file to list these domains, but I haven't had to do this enough times to warrant setting such a thing up.
 
 Searching the logs with exigrep
 ---
