@@ -21,6 +21,23 @@ Glossary:
 
 * To boot a machine even with a degraded array, modify `/etc/initramfs-tools/conf.d/mdadm` and run `update-initramfs -c -kall` (Use with caution!)
 
+## Speeding up general IO ##
+This is especially handy for a long disk re-sync.
+
+First, get the current readahead:
+blockdev --getra /dev/md0
+
+If it's a low number, performance is pitiful, but modern
+drives can improve performance significantly compared
+to the old values that drives used to use:
+blockdev --setra 65536 /dev/md0
+
+Now, set some sysctl settings:
+sysctl -w dev.raid.speed_limit_min=100000
+sysctl -w dev.raid.speed_limit_max=500000
+
+In some cases, this can nearly double IO.
+
 lvm
 ===
 
