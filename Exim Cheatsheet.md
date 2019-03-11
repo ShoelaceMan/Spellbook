@@ -287,3 +287,10 @@ exim 4.52 daemon started: pid=1079, -q1h, listening for SMTP on port 25 (IPv4)
 ```
 Read The Fucking Manual
 ---
+[The Exim Home Page](https://www.exim.org/)
+
+[Documentation For Exim](https://www.exim.org/docs.html)
+
+[The Exim Specification - Version 4.5x](https://www.exim.org/exim-html-4.50/doc/html/spec.html)
+
+[Exim command line arguments](https://www.exim.org/exim-html-4.50/doc/html/spec_5.html#IX199)
