@@ -263,11 +263,27 @@ Searching the logs with exigrep
 
 Bonus!
 ---
+To delete all queued messages containing a certain string in the body:
+```
+root@localhost# grep -lr 'a certain string' /var/spool/exim/input/ | \
+                sed -e 's/^.*\/\([a-zA-Z0-9-]*\)-[DH]$/\1/g' | xargs exim -Mrm
+```
+Note that the above only delves into /var/spool/exim in order to grep for queue files with the given string, and that's just because exiqgrep doesn't have a feature to grep the actual bodies of messages. If you are deleting these files directly, YOU ARE DOING IT WRONG! Use the appropriate exim command to properly deal with the queue.
 
+If you have to feed many, many message-ids (such as the output of an `exiqgrep -i` command that returns a lot of matches) to an exim command, you may exhaust the limit of your shell's command line arguments. In that case, pipe the listing of message-ids into xargs to run only a limited number of them at once. For example, to remove thousands of messages sent from joe@example.com:
+
+`root@localhost# exiqgrep -i -f '<joe@example.com>' | xargs exim -Mrm`
 
 Reload the configuration
 ---
+After making changes to exim.conf, you need to give the main exim pid a SIGHUP to re-exec it and have the configuration re-read. Sure, you could stop and start the service, but that's overkill and causes a few seconds of unnecessary downtime. Just do this:
 
+`root@localhost# kill -HUP $(cat /var/spool/exim/exim-daemon.pid)`
 
+You should then see something resembling the following in exim_mainlog:
+```
+pid 1079: SIGHUP received: re-exec daemon
+exim 4.52 daemon started: pid=1079, -q1h, listening for SMTP on port 25 (IPv4)
+```
 Read The Fucking Manual
 ---
