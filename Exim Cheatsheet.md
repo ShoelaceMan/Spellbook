@@ -15,7 +15,44 @@ These directories may contain further hashed subdirectories to deal with larger 
 
 Basic information
 ---
+Print a count of the messages in the queue:
 
+`root@localhost# exim -bpc`
+
+Print a listing of the messages in the queue (time queued, size, message-id, sender, recipient):
+
+`root@localhost# exim -bp`
+
+Print a summary of messages in the queue (count, volume, oldest, newest, domain, and totals):
+
+`root@localhost# exim -bp | exiqsumm`
+
+Print what Exim is doing right now:
+
+`root@localhost# exiwhat`
+
+Test how exim will route a given address:
+
+```
+root@localhost# exim -bt alias@localdomain.com
+user@thishost.com
+    <-- alias@localdomain.com
+  router = localuser, transport = local_delivery
+root@localhost# exim -bt user@thishost.com
+user@thishost.com
+  router = localuser, transport = local_delivery
+root@localhost# exim -bt user@remotehost.com
+  router = lookuphost, transport = remote_smtp
+  host mail.remotehost.com [1.2.3.4] MX=0
+```
+
+Run a pretend SMTP transaction from the command line, as if it were coming from the given IP address. This will display Exim's checks, ACLs, and filters as they are applied. The message will NOT actually be delivered.
+
+`root@localhost# exim -bh 192.168.11.22`
+
+Display all of Exim's configuration settings:
+
+`root@localhost# exim -bP`
 Searching the queue with exiqgrep
 ---
 
