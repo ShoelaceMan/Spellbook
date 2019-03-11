@@ -21,7 +21,7 @@ Glossary:
 
 * To boot a machine even with a degraded array, modify `/etc/initramfs-tools/conf.d/mdadm` and run `update-initramfs -c -kall` (Use with caution!)
 
-## Speeding up general IO ##
+## Speeding up general IO
 This is especially handy for a long disk re-sync.
 
 First, get the current readahead:
