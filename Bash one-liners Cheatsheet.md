@@ -65,3 +65,7 @@ Show HTTP traffic from TCPDUMP
 Unblock IP address (This is interactive)
 ===
 `echo -e "IP?"; read IP; grep $IP /var/log/lfd.log /usr/local/cpanel/logs/cphulkd.log /etc/csf/csf.* /etc/hosts.allow; grep "deny" /etc/hosts.allow | grep -v "#"; /usr/local/cpanel/scripts/cphulkdwhitelist $IP; csf -a $IP ; csf -tr $IP; whmapi1 flush_cphulk_login_history_for_ips ip=$IP`
+
+Update all docker images
+===
+`for i in $(docker images|grep -v ^REPOSITORY|awk '"'"'{print $1":"$2}'"'"'); do docker pull $i;done`
