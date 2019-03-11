@@ -56,7 +56,45 @@ Display all of Exim's configuration settings:
 
 Searching the queue with exiqgrep
 ---
+Exim includes a utility that is quite nice for grepping through the queue, called exiqgrep. Learn it. Know it. Live it. If you're not using this, and if you're not familiar with the various flags it uses, you're probably doing things the hard way, like piping `exim -bp` into awk, grep, cut, or `wc -l`. Don't make life harder than it already is.
 
+First, various flags that control what messages are matched. These can be combined to come up with a very particular search.
+
+Use -f to search the queue for messages from a specific sender:
+
+`root@localhost# exiqgrep -f [luser]@domain`
+
+Use -r to search the queue for messages for a specific recipient/domain:
+
+`root@localhost# exiqgrep -r [luser]@domain`
+
+Use -o to print messages older than the specified number of seconds. For example, messages older than 1 day:
+
+`root@localhost# exiqgrep -o 86400 [...]`
+
+Use -y to print messages that are younger than the specified number of seconds. For example, messages less than an hour old:
+
+`root@localhost# exiqgrep -y 3600 [...]`
+
+Use -s to match the size of a message with a regex. For example, 700-799 bytes:
+
+`root@localhost# exiqgrep -s '^7..$' [...]`
+
+Use -z to match only frozen messages, or -x to match only unfrozen messages.
+
+There are also a few flags that control the display of the output.
+
+Use -i to print just the message-id as a result of one of the above two searches:
+
+`root@localhost# exiqgrep -i [ -r | -f ] ...`
+
+Use -c to print a count of messages matching one of the above searches:
+
+`root@localhost# exiqgrep -c ...`
+
+Print just the message-id of the entire queue:
+
+`root@localhost# exiqgrep -i`
 
 Managing the queue
 ---
