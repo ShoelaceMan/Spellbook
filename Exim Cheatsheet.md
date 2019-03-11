@@ -56,7 +56,7 @@ Display all of Exim's configuration settings:
 
 Searching the queue with exiqgrep
 ---
-Exim includes a utility that is quite nice for grepping through the queue, called exiqgrep. Learn it. Know it. Live it. If you're not using this, and if you're not familiar with the various flags it uses, you're probably doing things the hard way, like piping `exim -bp` into awk, grep, cut, or `wc -l`. Don't make life harder than it already is.
+Exim includes a utility that is quite nice for grepping through the queue, called exiqgrep. [Learn it. Know it. Live it.](https://www.exim.org/exim-html-4.50/doc/html/spec_49.html#IX2895) If you're not using this, and if you're not familiar with the various flags it uses, you're probably doing things the hard way, like piping `exim -bp` into awk, grep, cut, or `wc -l`. Don't make life harder than it already is.
 
 First, various flags that control what messages are matched. These can be combined to come up with a very particular search.
 
