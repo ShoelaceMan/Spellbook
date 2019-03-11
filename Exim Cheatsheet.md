@@ -53,35 +53,46 @@ Run a pretend SMTP transaction from the command line, as if it were coming from 
 Display all of Exim's configuration settings:
 
 `root@localhost# exim -bP`
+
 Searching the queue with exiqgrep
 ---
+
 
 Managing the queue
 ---
 
+
 Access control
 ---
+
 
 Fix SMTP-Auth for Pine
 ---
 
+
 Log the subject line
 ---
+
 
 Disable identd lookups
 ---
 
+
 Disable Attachment Blocking
 ---
+
 
 Searching the logs with exigrep
 ---
 
+
 Bonus!
 ---
 
+
 Reload the configuration
 ---
+
 
 Read The Fucking Manual
 ---
