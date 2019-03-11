@@ -1,0 +1,1 @@
+echo -e "IP?"; read IP; grep $IP /var/log/lfd.log /usr/local/cpanel/logs/cphulkd.log /etc/csf/csf.* /etc/hosts.allow; grep "deny" /etc/hosts.allow | grep -v "#"; /usr/local/cpanel/scripts/cphulkdwhitelist $IP; csf -a $IP ; csf -tr $IP; whmapi1 flush_cphulk_login_history_for_ips ip=$IP

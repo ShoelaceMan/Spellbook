@@ -1,0 +1,1 @@
+for process in $(lsof|awk '/([d]eleted)/{print $1" "$8}'|grep -v "0$"|sort|awk '{print $1}'|uniq);do lsof|grep "$process.*(deleted)"|awk '{sum+=$8}END{sum=sum/1073741824}END{print $1" "sum"G"}';done

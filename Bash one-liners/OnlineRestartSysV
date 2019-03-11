@@ -1,0 +1,1 @@
+for s in $(for i in /etc/rc3.d/S*;do $i status;done|grep stopped|awk '{print $1}');do service $s start;done

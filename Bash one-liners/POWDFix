@@ -1,0 +1,1 @@
+service httpd stop;service iptables stop;if [[ $(ipcs -s|grep apache|wc -l) -gt 500 ]]; then for i in $(ipcs -s|grep apache|awk '{print $2}');do ipcrm -s $i;done; fi;service httpd start;service iptables start;service lsws restart

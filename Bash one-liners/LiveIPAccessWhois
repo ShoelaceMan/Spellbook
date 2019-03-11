@@ -1,0 +1,1 @@
+while read line; do whois $line | grep OrgName | sed "s/OrgName/$line/"; done < <(tailf ACCESSFILELOCATION | grep --line-buffered -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b")

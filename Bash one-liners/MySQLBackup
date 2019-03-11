@@ -1,0 +1,1 @@
+mkdir /home/mysql.back && for i in $(mysql -BNe 'show databases'| grep -v _schema);do echo $i; mysqldump $i > /home/mysql.back/$i.sql ; done

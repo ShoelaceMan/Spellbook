@@ -1,0 +1,1 @@
+kill -ALRM $(ps ax | awk '/[q]mail-send/ {print $1}')

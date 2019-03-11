@@ -1,0 +1,1 @@
+find /home/*/public_html/ -ctime -100 -type f -iname "*.php" -exec awk 'FNR==1 && /eval/ || /strlen/ || /strto/ || /auth_pass/ || /_dl/ || /GLOBALS/  { print FILENAME  }; FNR>1 {nextfile}' {} +

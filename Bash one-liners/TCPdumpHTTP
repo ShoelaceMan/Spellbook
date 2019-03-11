@@ -1,0 +1,1 @@
+tcpdump -s 0 -i INTERFACE -A host HOST and tcp port http
