@@ -20,7 +20,6 @@ origin  ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo (push)
 2. Run the `git remote set-url --add --push origin *git-repository-name*` command where *git-repository-name* is the URL and name of the Git repository where you want to host your code. This changes the push destination of origin to that Git repository.
 
 **Note**
-
 `git remote set-url --add --push` overrides the default URL for pushes, so you must run this command twice, as demonstrated in later steps.
 
 For example, the following command changes the push of origin to *some-URL*/MyDestinationRepo:
@@ -30,7 +29,6 @@ git remote set-url --add --push origin some-URL/MyDestinationRepo
 This command returns nothing.
 
 **Tip**
-
 If you are pushing to a Git repository that requires credentials, make sure you configure those credentials in a credential helper or in the configuration of the some-URL string. Otherwise, your pushes to that repository fail.
 
 Run the `git remote -v` command again, which should create output similar to the following:
@@ -73,10 +71,9 @@ origin  ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo (fetch)
 origin  some-URL/MyDestinationRepo (push)        
 origin  ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo (push)
 ```
-You now have two Git repositories as the destination for your pushes, but your pushes go to some-URL/MyDestinationRepo first. If the push to that repository fails, your commits are not pushed to either repository.
+You now have two Git repositories as the destination for your pushes, but your pushes go to *some-URL*/MyDestinationRepo first. If the push to that repository fails, your commits are not pushed to either repository.
 
 **Tip**
-
 If the other repository requires credentials you want to enter manually, consider changing the order of the pushes so that you push to CodeCommit first. Run git remote set-url --delete to delete the repository that is pushed to first, and then run git remote set-url --add to add it again so that it becomes the second push destination in the list.
 
 To verify you are now pushing to both remote repositories, use a text editor to create the following text file in your local repo:
@@ -93,13 +90,12 @@ Run git commit to commit the change in your local repo:
 ```
 git commit -m "Added bees.txt"
 ```
-To push the commit from the local repo to your remote repositories, run git push -u remote-name branch-name where remote-name is the nickname the local repo uses for the remote repositories and branch-name is the name of the branch to push to the repository.
+To push the commit from the local repo to your remote repositories, run `git push -u remote-name branch-name` where *remote-name* is the nickname the local repo uses for the remote repositories and *branch-name* is the name of the branch to push to the repository.
 
 **Tip**
-
 You only have to use the -u option the first time you push. Then the upstream tracking information is set.
 
-For example, running git push -u origin master would show the push went to both remote repositories in the expected branches, with output similar to the following:
+For example, running `git push -u origin master` would show the push went to both remote repositories in the expected branches, with output similar to the following:
 
 For HTTPS:
 ```
