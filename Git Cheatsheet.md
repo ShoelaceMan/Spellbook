@@ -23,13 +23,13 @@ origin  ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo (push)
 `git remote set-url --add --push` overrides the default URL for pushes, so you must run this command twice, as demonstrated in later steps.
 
 For example, the following command changes the push of origin to *some-URL*/MyDestinationRepo:
-
+```
 git remote set-url --add --push origin some-URL/MyDestinationRepo
-
+``` 
 This command returns nothing.
 
 **Tip**
-If you are pushing to a Git repository that requires credentials, make sure you configure those credentials in a credential helper or in the configuration of the some-URL string. Otherwise, your pushes to that repository fail.
+If you are pushing to a Git repository that requires credentials, make sure you configure those credentials in a credential helper or in the configuration of the *some-URL* string. Otherwise, your pushes to that repository fail.
 
 3. Run the `git remote -v` command again, which should create output similar to the following:
 
