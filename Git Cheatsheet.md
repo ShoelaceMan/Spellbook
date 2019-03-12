@@ -31,7 +31,7 @@ This command returns nothing.
 **Tip**
 If you are pushing to a Git repository that requires credentials, make sure you configure those credentials in a credential helper or in the configuration of the some-URL string. Otherwise, your pushes to that repository fail.
 
-Run the `git remote -v` command again, which should create output similar to the following:
+3. Run the `git remote -v` command again, which should create output similar to the following:
 
 For HTTPS:
 ```
@@ -43,7 +43,7 @@ For SSH:
 origin  ssh://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo (fetch)
 origin  some-URL/MyDestinationRepo (push)
 ```
-Now add the CodeCommit repository. Run `git remote set-url --add --push origin` again, this time with the URL and repository name of your CodeCommit repository.
+4. Now add the CodeCommit repository. Run `git remote set-url --add --push origin` again, this time with the URL and repository name of your CodeCommit repository.
 
 For example, the following command adds the push of origin to https://git-codecommit.us-east-2.amazonaws.com/v1/repos/MyDemoRepo:
 
@@ -57,7 +57,7 @@ git remote set-url --add --push origin ssh://git-codecommit.us-east-2.amazonaws.
 ```
 This command returns nothing.
 
-Run the `git remote -v` command again, which should create output similar to the following:
+5. Run the `git remote -v` command again, which should create output similar to the following:
 
 For HTTPS:
 ```
@@ -76,21 +76,21 @@ You now have two Git repositories as the destination for your pushes, but your p
 **Tip**
 If the other repository requires credentials you want to enter manually, consider changing the order of the pushes so that you push to CodeCommit first. Run git remote set-url --delete to delete the repository that is pushed to first, and then run git remote set-url --add to add it again so that it becomes the second push destination in the list.
 
-To verify you are now pushing to both remote repositories, use a text editor to create the following text file in your local repo:
+6. To verify you are now pushing to both remote repositories, use a text editor to create the following text file in your local repo:
 ```
 bees.txt
 -------
 Bees are flying insects closely related to wasps and ants, and are known for their role in pollination and for producing honey and beeswax.
 ```
-Run git add to stage the change in your local repo:
+7. Run git add to stage the change in your local repo:
 ```
 git add bees.txt
 ```
-Run git commit to commit the change in your local repo:
+8. Run git commit to commit the change in your local repo:
 ```
 git commit -m "Added bees.txt"
 ```
-To push the commit from the local repo to your remote repositories, run `git push -u remote-name branch-name` where *remote-name* is the nickname the local repo uses for the remote repositories and *branch-name* is the name of the branch to push to the repository.
+9. To push the commit from the local repo to your remote repositories, run `git push -u remote-name branch-name` where *remote-name* is the nickname the local repo uses for the remote repositories and *branch-name* is the name of the branch to push to the repository.
 
 **Tip**
 You only have to use the -u option the first time you push. Then the upstream tracking information is set.
