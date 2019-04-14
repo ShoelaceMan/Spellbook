@@ -1,0 +1,1 @@
+ffmpeg -i $input -c:v h264_nvenc -profile high444p -pixel_format yuv444p -preset default output.mp4
