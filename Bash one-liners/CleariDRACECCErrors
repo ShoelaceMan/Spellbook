@@ -1,0 +1,1 @@
+racadm racreset soft; sleep 30; until curl console.$(hostname) --connect-timeout 1; do sleep 1;done; srvadmin-services.sh restart
